@@ -1,7 +1,8 @@
 import express from 'express';
-import router from './router';
 import colors from 'colors';
 import db from './config/db';
+import usersRouter from './router/usersRouter';
+import loginRouter from './router/loginRouter';
 
 async function connectDB() {
     try {
@@ -18,6 +19,11 @@ connectDB();
 
 const server = express();
 
-server.use('/api/users', router);
+// Read data from forms
+server.use(express.json());
+
+server.use('/api/login', loginRouter);
+server.use('/api/users', usersRouter);
+
 
 export default server;
