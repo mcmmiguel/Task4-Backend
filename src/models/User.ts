@@ -31,13 +31,6 @@ class User extends Model {
     lastLogin: Date
 
     @Column({
-        type: DataType.DATE,
-        allowNull: false,
-        defaultValue: DataType.NOW
-    })
-    registrationTime: Date;
-
-    @Column({
         type: DataType.BOOLEAN,
         defaultValue: false
     })
