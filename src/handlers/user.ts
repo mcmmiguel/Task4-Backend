@@ -45,3 +45,20 @@ export const getUsers = async (req: Request, res: Response) => {
         console.log(error);
     }
 }
+
+export const toggleBlockStatus = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findByPk(id);
+
+        if (!user) {
+            res.status(404).json({ error: 'User not found' });
+        }
+
+        user.isBlocked = !user.dataValues.isBlocked;
+        await user.save();
+        res.json({ data: user.isBlocked });
+    } catch (error) {
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+}
