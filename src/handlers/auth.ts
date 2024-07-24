@@ -37,11 +37,14 @@ export const login = async (req: Request, res: Response) => {
         }
 
         const isPasswordCorrect = await checkPassword(password, user.password);
-
         if (!isPasswordCorrect) return res.status(401).json({ error: 'Invalid password' });
 
-        // Generar JWT
         const token = generateJWT({ id: user.id });
+
+        const currentDate = Date.now();
+        user.lastLogin = new Date(currentDate);
+
+        await user.save();
 
         res.json({ token });
 
