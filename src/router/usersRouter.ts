@@ -1,9 +1,11 @@
 import { Router } from "express";
 import { deleteUser, getUsers, toggleBlockStatus } from "../handlers/user";
 import { body, param } from 'express-validator';
-import { handleInputErrors } from "../middleware";
+import { authenticate, handleInputErrors } from "../middleware";
 
 const usersRouter = Router();
+
+usersRouter.use(authenticate);
 
 usersRouter.get('/', getUsers);
 
