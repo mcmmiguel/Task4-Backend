@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUsers, registerUser, toggleBlockStatus } from "../handlers/user";
+import { deleteUser, getUsers, registerUser, toggleBlockStatus } from "../handlers/user";
 import { param } from 'express-validator';
 import { handleInputErrors } from "../middleware";
 
@@ -13,6 +13,12 @@ usersRouter.patch('/updateBlockStatus/:id',
     param('id').isInt().withMessage('ID not valid'),
     handleInputErrors,
     toggleBlockStatus
+);
+
+usersRouter.delete('/:id',
+    param('id').isInt().withMessage('ID not valid'),
+    handleInputErrors,
+    deleteUser,
 );
 
 

@@ -31,7 +31,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
         res.send('Account registered successfully');
     } catch (error) {
-        res.status(500).json({ error: 'Something went wrong' });
+        res.status(500).json({ error: 'Something went wrong. Try again later' });
     }
 }
 
@@ -59,6 +59,23 @@ export const toggleBlockStatus = async (req: Request, res: Response) => {
         await user.save();
         res.json({ data: user.isBlocked });
     } catch (error) {
-        res.status(500).json({ error: 'Something went wrong' });
+        res.status(500).json({ error: 'Something went wrong. Try again later' });
+    }
+}
+
+
+export const deleteUser = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findByPk(id);
+
+        if (!user) {
+            res.status(404).json({ error: 'User not found' });
+        }
+
+        await user.destroy();
+        res.json({ data: 'The user has been deleted' });
+    } catch (error) {
+        res.status(500).json({ error: 'Something went wrong. Try again later' });
     }
 }
