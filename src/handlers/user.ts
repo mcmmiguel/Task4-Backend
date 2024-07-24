@@ -38,7 +38,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         const user = await User.findByPk(id);
 
         if (!user) {
-            res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'User not found' });
         }
 
         await user.destroy();

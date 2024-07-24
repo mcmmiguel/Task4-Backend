@@ -40,12 +40,12 @@ export const login = async (req: Request, res: Response) => {
         const user = await User.findOne({ where: { email } });
 
         if (!user) {
-            res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'User not found' });
         }
 
         const isPasswordCorrect = await checkPassword(password, user.password);
 
-        if (!isPasswordCorrect) res.status(401).json({ error: 'Invalid password' });
+        if (!isPasswordCorrect) return res.status(401).json({ error: 'Invalid password' });
 
         // Generar JWT
         const token = generateJWT({ id: user.id });
