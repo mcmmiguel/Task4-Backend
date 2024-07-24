@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { body } from "express-validator";
 import { handleInputErrors } from "../middleware";
-import { registerUser } from "../handlers/auth";
+import { login, registerUser } from "../handlers/auth";
 
 const authRouter = Router();
 
@@ -22,6 +22,13 @@ authRouter.post('/register',
     registerUser
 );
 
-authRouter.post('/login',)
+authRouter.post('/login',
+    body('email')
+        .notEmpty().trim().isEmail().withMessage('Invalid email'),
+    body('password')
+        .notEmpty().withMessage('Password must not be empty'),
+    handleInputErrors,
+    login
+);
 
 export default authRouter;
