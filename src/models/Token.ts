@@ -10,21 +10,21 @@ class Token extends Model {
         type: DataType.STRING,
         allowNull: false,
     })
-    token: string;
+    declare token: string;
 
     @ForeignKey(() => User)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    userId: number;
+    declare userId: number;
 
     @Column({
         type: DataType.DATE,
         allowNull: false,
         defaultValue: DataType.NOW,
     })
-    expiresAt: Date;
+    declare expiresAt: Date;
 
     isExpired(): boolean {
         return new Date() > this.expiresAt;

@@ -9,32 +9,32 @@ class User extends Model {
         type: DataType.STRING,
         allowNull: false,
     })
-    name: string
+    declare name: string
 
     @Column({
         type: DataType.STRING,
         unique: true,
         allowNull: false,
     })
-    email: string
+    declare email: string
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
     })
-    password: string
+    declare password: string
 
     @Column({
         type: DataType.DATE,
         allowNull: true,
     })
-    lastLogin: Date
+    declare lastLogin: Date
 
+    @Default(false)
     @Column({
         type: DataType.BOOLEAN,
-        defaultValue: false
     })
-    isBlocked: boolean
+    declare isBlocked: boolean
 }
 
 export default User;
