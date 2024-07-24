@@ -46,6 +46,23 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         }
     } catch (error) {
         console.log(error);
-        res.json(500).json({ error: 'Something went wrong' });
+        res.status(500).json({ error: 'Invalid token' });
+    }
+}
+
+export const verifyStatus = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        /*  req.user = if I have JWT - This is for protected routes, less login
+            req.body = if I don't have JWT, take the email from the form - LOGIN
+            This implementation is complemented by the authentication middleware
+        */
+        const { email } = req.user || req.body;
+        const user = await User.findOne({ where: { email } });
+        if (user.isBlocked) return res.status(403).json({ error: 'Account blocked. Please request another user to unlock it.' });
+
+        next();
+    } catch (error) {
+        console.log(error);
+        res.status(403).json({ error: 'something went wrong' })
     }
 }

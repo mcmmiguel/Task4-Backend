@@ -1,6 +1,7 @@
 import { Table, Model, Column, DataType, Default, AllowNull } from 'sequelize-typescript';
 
 export interface IUser {
+    id?: number;
     email: string;
     password: string;
     name: string;
