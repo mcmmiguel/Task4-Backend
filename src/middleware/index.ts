@@ -45,6 +45,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
             }
         }
     } catch (error) {
+        console.log(error);
         res.json(500).json({ error: 'Something went wrong' });
     }
 }

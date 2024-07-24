@@ -22,6 +22,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
         res.json({ data: 'User created successfully' });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Something went wrong. Try again later' });
     }
 }
@@ -49,6 +50,7 @@ export const login = async (req: Request, res: Response) => {
         res.json({ token });
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Something went wrong. Try again later' });
     }
 }
