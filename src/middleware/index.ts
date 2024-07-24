@@ -41,7 +41,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
                 req.user = user;
                 next();
             } else {
-                res.status(500).json({ error: 'Token no válido' });
+                res.status(500).json({ error: 'Invalid token' });
             }
         }
     } catch (error) {

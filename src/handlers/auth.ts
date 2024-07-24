@@ -1,8 +1,6 @@
 import { Request, Response } from 'express'
 import User from '../models/User';
-import Token from '../models/Token';
 import { checkPassword, hashPassword } from '../utils/auth';
-import { generateToken } from '../utils/token';
 import { generateJWT } from '../utils/jwt';
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -17,14 +15,9 @@ export const registerUser = async (req: Request, res: Response) => {
             return res.status(409).json({ error: error.message });
         }
 
-        const user = await User.create({
+        await User.create({
             ...req.body,
             password: await hashPassword(password),
-        });
-
-        await Token.create({
-            token: generateToken(),
-            userId: user.id,
         });
 
         res.json({ data: 'User created successfully' });
