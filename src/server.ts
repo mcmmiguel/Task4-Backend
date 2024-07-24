@@ -2,7 +2,7 @@ import express from 'express';
 import colors from 'colors';
 import db from './config/db';
 import usersRouter from './router/usersRouter';
-import loginRouter from './router/loginRouter';
+import authRouter from './router/authRouter';
 
 async function connectDB() {
     try {
@@ -22,7 +22,7 @@ const server = express();
 // Read data from forms
 server.use(express.json());
 
-server.use('/api/login', loginRouter);
+server.use('/api/auth', authRouter);
 server.use('/api/users', usersRouter);
 
 
