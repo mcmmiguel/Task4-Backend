@@ -58,11 +58,12 @@ export const verifyStatus = async (req: Request, res: Response, next: NextFuncti
         */
         const { email } = req.user || req.body;
         const user = await User.findOne({ where: { email } });
+        if (!user) return res.status(404).json({ error: 'User not found' });
         if (user.isBlocked) return res.status(403).json({ error: 'Account blocked. Please request another user to unlock it.' });
 
         next();
     } catch (error) {
         console.log(error);
-        res.status(403).json({ error: 'something went wrong' })
+        res.status(403).json({ error: 'Something went wrong' })
     }
 }
