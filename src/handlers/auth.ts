@@ -20,7 +20,7 @@ export const registerUser = async (req: Request, res: Response) => {
             password: await hashPassword(password),
         });
 
-        res.json({ data: 'User created successfully' });
+        res.json('User created successfully');
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong. Try again later' });
@@ -53,4 +53,8 @@ export const login = async (req: Request, res: Response) => {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong. Try again later' });
     }
+}
+
+export const user = async (req: Request, res: Response) => {
+    return res.json(req.user);
 }

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import { handleInputErrors, verifyStatus } from "../middleware";
-import { login, registerUser } from "../handlers/auth";
+import { authenticate, handleInputErrors, verifyStatus } from "../middleware";
+import { login, registerUser, user } from "../handlers/auth";
 
 const authRouter = Router();
 
@@ -31,5 +31,11 @@ authRouter.post('/login',
     verifyStatus,
     login
 );
+
+authRouter.get('/user',
+    authenticate,
+    verifyStatus,
+    user
+)
 
 export default authRouter;

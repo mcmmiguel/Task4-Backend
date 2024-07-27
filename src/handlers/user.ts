@@ -5,7 +5,7 @@ export const getUsers = async (req: Request, res: Response) => {
     try {
         const users = await User.findAll();
 
-        res.json({ data: users });
+        res.json(users);
 
     } catch (error) {
         console.log(error);
@@ -26,7 +26,7 @@ export const toggleBlockStatus = async (req: Request, res: Response) => {
         user.isBlocked = !user.isBlocked;
         await user.save();
 
-        res.json({ data: user.isBlocked });
+        res.json(user.isBlocked);
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong. Try again later' });
@@ -44,7 +44,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         }
 
         await user.destroy();
-        res.json({ data: 'The user has been deleted' });
+        res.json('The user has been deleted');
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong. Try again later' });
