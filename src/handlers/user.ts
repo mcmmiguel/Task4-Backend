@@ -3,7 +3,11 @@ import User from '../models/User';
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
-        const users = await User.findAll();
+        const users = await User.findAll({
+            order: [
+                ['id', 'ASC']
+            ]
+        });
 
         res.json(users);
 
@@ -13,7 +17,7 @@ export const getUsers = async (req: Request, res: Response) => {
     }
 }
 
-export const toggleBlockStatus = async (req: Request, res: Response) => {
+export const blockUser = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const user = await User.findByPk(id);
@@ -23,7 +27,9 @@ export const toggleBlockStatus = async (req: Request, res: Response) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        user.isBlocked = !user.isBlocked;
+        if (user.isBlocked) return;
+        user.isBlocked = true;
+
         await user.save();
 
         res.json(user.isBlocked);
@@ -32,7 +38,27 @@ export const toggleBlockStatus = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Something went wrong. Try again later' });
     }
 }
+export const unlockUser = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findByPk(id);
 
+        if (!user) {
+            console.log('User not found');
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (!user.isBlocked) return;
+        user.isBlocked = false;
+
+        await user.save();
+
+        res.json(user.isBlocked);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong. Try again later' });
+    }
+}
 
 export const deleteUser = async (req: Request, res: Response) => {
     try {

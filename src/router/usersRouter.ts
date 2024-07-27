@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteUser, getUsers, toggleBlockStatus } from "../handlers/user";
+import { blockUser, deleteUser, getUsers, unlockUser } from "../handlers/user";
 import { param } from 'express-validator';
 import { authenticate, handleInputErrors, verifyStatus } from "../middleware";
 
@@ -9,10 +9,15 @@ usersRouter.use(authenticate, verifyStatus);
 
 usersRouter.get('/', getUsers);
 
-usersRouter.patch('/update-block-status/:id',
+usersRouter.patch('/block-user/:id',
     param('id').isInt().withMessage('Invalid ID'),
     handleInputErrors,
-    toggleBlockStatus
+    blockUser
+);
+usersRouter.patch('/unlock-user/:id',
+    param('id').isInt().withMessage('Invalid ID'),
+    handleInputErrors,
+    unlockUser
 );
 
 usersRouter.delete('/:id',
